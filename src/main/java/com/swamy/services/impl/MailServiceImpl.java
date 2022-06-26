@@ -30,6 +30,7 @@ public class MailServiceImpl implements MailService {
 	@Autowired
 	private InboxRepo inboxRepo;
 
+	//get user active details
 	public User getActiveUser(String emailId) {
 		User user = userRepo.findByEmailId(emailId);
 		return user;
