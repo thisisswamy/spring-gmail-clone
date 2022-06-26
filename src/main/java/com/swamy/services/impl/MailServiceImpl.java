@@ -95,9 +95,5 @@ public class MailServiceImpl implements MailService {
 		starredRepo.save(starred);
 	}
 
-//	@ExceptionHandler(value=Exception.class)
-//	public String exceptionHandler() {
-//		return "User not found Please check sender mail again ! Thank You";
-//	}
 
 }
