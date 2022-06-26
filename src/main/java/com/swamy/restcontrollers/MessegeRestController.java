@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swamy.entity.Inbox;
 import com.swamy.entity.Sent;
 import com.swamy.entity.Starred;
-import com.swamy.entity.User;
 import com.swamy.model.MailModel;
 import com.swamy.services.MailService;
 
@@ -27,9 +26,8 @@ public class MessegeRestController {
 	private MailService mailService;
 	
 	@PostMapping("/send")
-	public User sendMessage(@RequestBody MailModel mailModel) throws Exception {
-//		System.out.println(mailModel);
-		return mailService.sendMessage(mailModel);
+	public void sendMessage(@RequestBody MailModel mailModel) throws Exception {
+		mailService.sendMessage(mailModel);
 	}
 	
 	@GetMapping("/sent/{emailId}")
@@ -48,12 +46,16 @@ public class MessegeRestController {
 	}
 	
 	@DeleteMapping("/delete/sent/{id}")
-	public MailModel deleteMail(@PathVariable long id) {
-		return mailService.deleteMail(id);
+	public void deleteMail(@PathVariable long id) {
+		mailService.deleteMail(id);
 	}
-	@PutMapping("starred/{id}")
+	@PutMapping("/sent/starred/{id}")
 	public void moveToStarredMsge(@PathVariable long id) {
 		mailService.moveToStarredMsge(id);
+	}
+	@PutMapping("/inbox/starred/{id}")
+	public void addToStarredMsge(@PathVariable long id) {
+		mailService.addToStarredMsge(id);
 	}
 	
 	@ExceptionHandler(value=Exception.class)
