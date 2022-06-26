@@ -1,0 +1,9 @@
+package com.swamy.repos;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.swamy.entity.Inbox;
+
+public interface InboxRepo extends JpaRepository<Inbox, Long> {
+
+}
