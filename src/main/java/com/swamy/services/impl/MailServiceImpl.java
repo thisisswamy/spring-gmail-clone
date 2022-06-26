@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public User sendMessage(MailModel mailModel) throws Exception {
+	public void sendMessage(MailModel mailModel) throws Exception {
 		User activeUser = getActiveUser(mailModel.getMailFrom());
 		User sender = getActiveUser(mailModel.getMailTo());
 		Sent sentMsg = new Sent();
@@ -58,7 +58,7 @@ public class MailServiceImpl implements MailService {
 			sentRepo.save(sentMsg);
 			recievedMessage(sentMsg,sender);
 		}
-		return activeUser;
+//		return activeUser;
 	}
 
 	@Override
@@ -80,12 +80,11 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public MailModel deleteMail(long id) {
+	public void deleteMail(long id) {
 		Sent mail = sentRepo.findById(id);
 		mail.setUser(null);
-		MailModel mailModel=new MailModel(mail.getMailFrom(),mail.getMailTo(),mail.getSubject(),mail.getMailBody(),mail.getDateAndTime());
+		//MailModel mailModel=new MailModel(mail.getMailFrom(),mail.getMailTo(),mail.getSubject(),mail.getMailBody(),mail.getDateAndTime());
 		sentRepo.delete(mail);
-		return mailModel;
 	}
 
 	@Override
@@ -93,6 +92,12 @@ public class MailServiceImpl implements MailService {
 		Sent mail = sentRepo.findById(id);
 		Starred starred=new Starred(mail.getMailFrom(),mail.getMailTo(),mail.getSubject(),mail.getMailBody(),mail.getDateAndTime(),mail.getUser());
 		starredRepo.save(starred);
+	}
+	@Override
+	public void addToStarredMsge(long id) {
+		Inbox mail = inboxRepo.findById(id);
+		Starred starred=new Starred(mail.getMailFrom(),mail.getMailTo(),mail.getSubject(),mail.getMailBody(),mail.getDateAndTime(),mail.getUser());;
+		
 	}
 
 
