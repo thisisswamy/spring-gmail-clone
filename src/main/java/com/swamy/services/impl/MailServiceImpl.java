@@ -39,11 +39,11 @@ public class MailServiceImpl implements MailService {
 		inboxRepo.save(inbox);
 	}
 
+	//this is for sending mail
 	@Override
 	public User sendMessage(MailModel mailModel) throws Exception {
 		User activeUser = getActiveUser(mailModel.getMailFrom());
 		User sender = getActiveUser(mailModel.getMailTo());
-//		System.out.println("sender mail: "+sender.getEmailId());
 		Sent sentMsg = new Sent();
 		sentMsg.setMailFrom(mailModel.getMailFrom());
 		sentMsg.setMailTo(mailModel.getMailTo());
