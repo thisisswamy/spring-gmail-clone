@@ -58,7 +58,6 @@ public class MailServiceImpl implements MailService {
 			sentRepo.save(sentMsg);
 			recievedMessage(sentMsg,sender);
 		}
-//		return activeUser;
 	}
 
 	@Override
