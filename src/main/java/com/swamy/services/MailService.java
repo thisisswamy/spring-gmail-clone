@@ -16,7 +16,6 @@ public interface MailService {
 	List<Sent> getSentMessages(String emailId);
 	List<Inbox> getInboxMessages(String emailId);
 	List<Starred> getStarredMessages(String emailId);
-	void deleteMail(long id);
-	void moveToStarredMsge(long id);
-	void addToStarredMsge(long id);
+	void deleteMail(String name,long id);
+	void moveToStarredMsge(String folder ,long id);
 }

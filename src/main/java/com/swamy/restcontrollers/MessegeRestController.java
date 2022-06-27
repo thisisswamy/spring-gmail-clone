@@ -47,17 +47,13 @@ public class MessegeRestController {
 		return mailService.getStarredMessages(emailId);
 	}
 	
-	@DeleteMapping("/delete/sent/{id}")
-	public void deleteMail(@PathVariable long id) {
-		mailService.deleteMail(id);
+	@DeleteMapping("/delete/{name}/{id}")
+	public void deleteMail(@PathVariable String name, @PathVariable long id) {
+		mailService.deleteMail(name,id);
 	}
-	@PutMapping("/sent/starred/{id}")
-	public void moveToStarredMsge(@PathVariable long id) {
-		mailService.moveToStarredMsge(id);
-	}
-	@PutMapping("/inbox/starred/{id}")
-	public void addToStarredMsge(@PathVariable long id) {
-		mailService.addToStarredMsge(id);
+	@PutMapping("/sent/{folder}/{id}")
+	public void moveToStarredMsge(@PathVariable String folder,@PathVariable long id) {
+		mailService.moveToStarredMsge(folder ,id);
 	}
 	
 	@ExceptionHandler(value=Exception.class)
