@@ -51,7 +51,7 @@ public class MessegeRestController {
 	public void deleteMail(@PathVariable String name, @PathVariable long id) {
 		mailService.deleteMail(name,id);
 	}
-	@PutMapping("/sent/{folder}/{id}")
+	@PutMapping("/starred/{folder}/{id}")
 	public void moveToStarredMsge(@PathVariable String folder,@PathVariable long id) {
 		mailService.moveToStarredMsge(folder ,id);
 	}

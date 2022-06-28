@@ -40,6 +40,9 @@ public class MailServiceImpl implements MailService {
 		 UUID randomValue = UUID.randomUUID();
 		 return randomValue.toString();	
 	}
+	public void removeStarredMail(Starred starred) {
+		starredRepo.delete(starred);
+	}
 	public void recievedMessage(Sent sent,User user, User sender) {
 		Inbox inbox=new Inbox();
 		inbox.setMailFrom(sent.getMailFrom());
@@ -119,13 +122,42 @@ public class MailServiceImpl implements MailService {
 	public void moveToStarredMsge(String folder ,long id) {
 		if(folder.equals("sent")) {
 			Sent mail = sentRepo.findById(id);
-			Starred starred= new Starred(mail.getMailFrom(),mail.getMailTo(),mail.getMailBody(),mail.getSubject(),mail.getDateAndTime(),mail.getUniqueMailId(),mail.getUser());
-			starredRepo.save(starred);
+			Starred checkMailStarred=starredRepo.findByUniqueId(mail.getUniqueMailId());
+			if(checkMailStarred!=null) {
+				Starred starred= new Starred();
+				starred.setMailFrom(mail.getMailFrom());
+				starred.setMailTo(mail.getMailTo());
+				starred.setSubject(mail.getSubject());
+				starred.setMailBody(mail.getMailBody());
+				starred.setDateAndTime(mail.getDateAndTime());
+				starred.setUser(mail.getUser());
+				starred.setUniqueMailId(mail.getUniqueMailId());
+				starred.setUserName(mail.getUserName());
+				starredRepo.save(starred);
+			}
+			else {
+				removeStarredMail(checkMailStarred);
+			}
+			
 		}
 		else if(folder.equals("inbox")) {
 			Inbox mail = inboxRepo.findById(id);
-			Starred starred= new Starred(mail.getMailFrom(),mail.getMailTo(),mail.getMailBody(),mail.getSubject(),mail.getDateAndTime(),mail.getUniqueMailId(),mail.getUser());
-			starredRepo.save(starred);
+			Starred checkMailStarred=starredRepo.findByUniqueId(mail.getUniqueMailId());
+			if(checkMailStarred==null) {
+				Starred starred= new Starred();
+				starred.setMailFrom(mail.getMailFrom());
+				starred.setMailTo(mail.getMailTo());
+				starred.setSubject(mail.getSubject());
+				starred.setMailBody(mail.getMailBody());
+				starred.setDateAndTime(mail.getDateAndTime());
+				starred.setUser(mail.getUser());
+				starred.setUniqueMailId(mail.getUniqueMailId());
+				starred.setUserName(mail.getUserName());
+				starredRepo.save(starred);
+			}
+			else {
+				removeStarredMail(checkMailStarred);
+			}
 		}
 		else {
 			Starred starred=starredRepo.findById(id);
