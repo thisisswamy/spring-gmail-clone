@@ -24,7 +24,7 @@ import com.swamy.services.MailService;
 
 @RestController
 @RequestMapping("api/messeges/")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "https://partial-gmail-clone-app.herokuapp.com/")
 public class MessegeRestController {
 	@Autowired
 	private MailService mailService;
