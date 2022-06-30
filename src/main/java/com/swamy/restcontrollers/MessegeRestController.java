@@ -1,5 +1,7 @@
 package com.swamy.restcontrollers;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,9 +58,14 @@ public class MessegeRestController {
 		mailService.moveToStarredMsge(folder ,id);
 	}
 	
-	@ExceptionHandler(value=Exception.class)
+	@ExceptionHandler(value=UserPrincipalNotFoundException.class)
 	public String exceptionHandler() {
 		return "User not found Please check sender mail again ! Thank You";
+	}
+	
+	@ExceptionHandler(value=SQLException.class)
+	public String sqlExceptionHandler() {
+		return "Data too long please limit the data";
 	}
 
 
