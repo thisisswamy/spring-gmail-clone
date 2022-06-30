@@ -1,5 +1,6 @@
 package com.swamy.services.impl;
 
+import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,9 +61,7 @@ public class MailServiceImpl implements MailService {
 	@Override
 	public void sendMessage(MailModel mailModel) throws Exception {
 		User activeUser = getActiveUser(mailModel.getMailFrom());
-		System.out.println("from : "+activeUser.getEmailId());
 		User sender = getActiveUser(mailModel.getMailTo());
-		System.out.println("To : "+sender.getEmailId());
 		Sent sentMsg = new Sent();
 		sentMsg.setMailFrom(mailModel.getMailFrom());
 		sentMsg.setMailTo(mailModel.getMailTo());
@@ -73,7 +72,7 @@ public class MailServiceImpl implements MailService {
 		sentMsg.setUserName(sender.getFirstName()+" "+sender.getLastName());
 		sentMsg.setUser(activeUser);
 		if(sender==null) {
-			throw new Exception();
+			throw new UserPrincipalNotFoundException("usernot found");
 		}else {
 			sentRepo.save(sentMsg);
 			recievedMessage(sentMsg,sender,activeUser);
@@ -123,7 +122,7 @@ public class MailServiceImpl implements MailService {
 		if(folder.equals("sent")) {
 			Sent mail = sentRepo.findById(id);
 			Starred checkMailStarred=starredRepo.findByUniqueId(mail.getUniqueMailId());
-			if(checkMailStarred!=null) {
+			if(checkMailStarred==null) {
 				Starred starred= new Starred();
 				starred.setMailFrom(mail.getMailFrom());
 				starred.setMailTo(mail.getMailTo());
