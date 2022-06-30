@@ -15,7 +15,7 @@ import com.swamy.model.UserModel;
 import com.swamy.services.Service;
 @RestController
 @RequestMapping("api/users/")
-@CrossOrigin(origins = "http://localhost:4200/")
+@CrossOrigin(origins = "https://partial-gmail-clone-app.herokuapp.com/")
 public class UserRestControlller {
 	
 	@Autowired
